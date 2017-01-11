@@ -33,6 +33,8 @@ services:
       - "POSTGRES_PASSWORD=mysecretpassword1234"
     volumes_from:
       - data
+    depends_on:
+      - data
   data:
     image: "busybox"
     volumes:

@@ -1,6 +1,8 @@
 FROM ruby:2.3.1
 
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+
+# ARG命令でdocker-compose.ymlから渡されたAPP_HOMEという引数を参照できるようにします
 ARG APP_HOME
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
