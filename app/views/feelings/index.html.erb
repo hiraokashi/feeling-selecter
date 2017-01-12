@@ -1,0 +1,3 @@
+<h1>Feelings#index</h1>
+<p>Find me in app/views/feelings/index.html.erb</p>
+<%= react_component('Feelings', {feelings: Feeling.all.as_json.map{ |f| f['attributes'] }}) %>
