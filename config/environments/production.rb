@@ -15,6 +15,9 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  config.browserify_rails.commandline_options = "-t reactify"
+  config.less.paths << "#{Rails.root}/node_modules/material-ui/src/less/"
+  config.browserify_rails.use_browserifyinc = true
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?

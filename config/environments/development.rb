@@ -8,7 +8,9 @@ Rails.application.configure do
 
   # Do not eager load code on boot.
   config.eager_load = false
-
+  config.browserify_rails.commandline_options = "-t reactify"
+  config.less.paths << "#{Rails.root}/node_modules/material-ui/src/less/"
+  config.browserify_rails.use_browserifyinc = true
   # Show full error reports.
   config.consider_all_requests_local = true
 

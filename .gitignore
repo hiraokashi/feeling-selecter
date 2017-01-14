@@ -27,6 +27,7 @@ tags
 /log/*
 !/log/.keep
 /tmp
+/node_modules
 
 # Ignore bundler config.
 /.bundle
