@@ -1,7 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.react.variant = :production
+#  config.react.variant = :production
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -15,9 +15,7 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  config.browserify_rails.commandline_options = "-t reactify"
-  config.less.paths << "#{Rails.root}/node_modules/material-ui/src/less/"
-  config.browserify_rails.use_browserifyinc = true
+  #config.browserify_rails.commandline_options = "-t reactify"
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
