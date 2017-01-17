@@ -14,6 +14,5 @@ module Thinklog
     config.browserify_rails.commandline_options = "-t babelify"
     config.less.paths << "#{Rails.root}/node_modules/material-ui/src/less/"
     config.browserify_rails.use_browserifyinc = true
-    config.browserify_rails.evaluate_node_modules = true
   end
 end

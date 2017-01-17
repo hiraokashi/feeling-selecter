@@ -8,4 +8,4 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 window.React = React;
 
 injectTapEventPlugin();
-ReactDOM.render(<Feelings />, document.getElementById('container'));
+ReactDOM.render(<Feelings url="/api/feelings"/>, document.getElementById('feelings'));
