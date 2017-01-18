@@ -20,6 +20,7 @@ class Feeling extends React.Component {
     )
   }
 }
+
 export default class Feelings extends React.Component {
   constructor(props) {
     super(props)

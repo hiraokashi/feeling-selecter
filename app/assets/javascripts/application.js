@@ -14,5 +14,5 @@
 //= require jquery_ujs
 $(function(){
   // DOM がロードされてから
-  require('./components');
+  require('./index');
 });
