@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { render } from 'react-dom'
 import Feelings from './components/feelings';
+import auth from './components/auth';
 import { IndexRoute, Router, Route,  Link} from 'react-router';
 import BrowserHistory from 'react-router/lib/BrowserHistory';
 import injectTapEventPlugin from 'react-tap-event-plugin';
