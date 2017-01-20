@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: 'top#index'
   namespace :api, { format: 'json' } do
-    resource :user_sessions, only: [:create, :destroy, :show]
+    resource :sessions, only: [:create, :destroy, :show]
     resources :feelings
   end
 

@@ -1,10 +1,11 @@
 class Api::SessionsController < ApplicationController
-  skip_before_filter :require_valid_token, only: :create, :show
+  skip_before_action :require_valid_token, only: [:create, :show]
 
   def create
     if @user = login(login_user[:email], login_user[:password])
       api_key = @user.activate
       @access_token = api_key.access_token
+      logger.info('login success !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     else
       respond_to do |format|
         format.json { render nothing: true, status: :not_found }
@@ -16,10 +17,16 @@ class Api::SessionsController < ApplicationController
   def show
     # ログイン状態の確認
     access_token = request.headers[:HTTP_ACCESS_TOKEN]
-    authorized  = User.login?(access_token) ? :authorized : :unauthorized
-    respond_to do |format|
-      format.json { render nothing: true, status: authorized }
+    unless User.login?(access_token) ? :ok : :unauthorized
+      head(:unauthorized)
     end
+
+    #authorized  = access_token == 'dfsfsfsfsf'? :ok : :unauthorized
+    #respond_to do |format|
+    #  #format.json {render nothing: true, status: authorized }
+    #  head(authorized)
+    #end
+    #head(authorized)
   end
 
   def destroy

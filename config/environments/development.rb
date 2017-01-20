@@ -34,6 +34,15 @@ Rails.application.configure do
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
+  class LoggerFormatWithTime
+
+    def call(severity, timestamp, progname, msg)
+      # for docker
+      "         [#{timestamp.strftime("%Y/%m/%d %H:%M:%S" )}.#{'%06d' % timestamp.usec.to_s}] (pid=#{$$}) [#{severity}] -- [#{progname}]: #{String === msg ? msg : msg.inspect}\n"
+    end
+  end
+
+  config.log_formatter = LoggerFormatWithTime.new
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 

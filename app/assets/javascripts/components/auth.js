@@ -1,7 +1,8 @@
 export default {
-  loggedIn() {
+  loggedIn(nextState, replace, next) {
     // サーバにログイン情報を問い合わせる
-  }
+    alert(Object.keys(nextState.location))
+  },
   // OnEnter Hook Function with Router
   executeCredentials(nextState, replace, next) {
     const query = nextState.location.query
