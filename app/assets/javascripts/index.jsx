@@ -100,9 +100,9 @@ const Top = withRouter(class Top extends React.Component {
         </ul>
         <div className="main">
           <h1>ログイン</h1>
-          <form onSubmit={this.handleSubmit.bind(this)}>
-            <input type='text' name="email" placeholder="メールアドレス" onChange={this.handleChange.bind(this)}/>
-            <input type='password' name="password" placeholder="password" onChange={this.handleChange.bind(this)}/>
+          <form onSubmit={this.handleSubmit}>
+            <input type='text' name="email" placeholder="メールアドレス" onChange={this.handleChange}/>
+            <input type='password' name="password" placeholder="password" onChange={this.handleChange}/>
             <div style={{textAlign:"center"}}>
               <button type="submit">ログイン</button>
             </div>

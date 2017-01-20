@@ -16,7 +16,7 @@ class Feeling extends React.Component {
   }
   render () {
     return (
-        <RaisedButton onClick={this.handleClick.bind(this)} key={this.props.id} style={style} secondary={true} label={this.props.name} />
+        <RaisedButton onClick={this.handleClick)} key={this.props.id} style={style} secondary={true} label={this.props.name} />
     )
   }
 }
@@ -47,7 +47,7 @@ export default class Feelings extends React.Component {
       <MuiThemeProvider muiTheme={getMuiTheme()}>
       <div className='messages'>
         {this.state.feelings.map((feeling, i) => {
-           return <Feeling key={i} id={feeling.id} name={feeling.name} onButtonClick={this.handleFeelingSubmit.bind(this)}/>
+           return <Feeling key={i} id={feeling.id} name={feeling.name} onButtonClick={this.handleFeelingSubmit}/>
         })}
       </div>
       </MuiThemeProvider>

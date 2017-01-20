@@ -17,7 +17,7 @@ class Api::SessionsController < ApplicationController
   def show
     # ログイン状態の確認
     access_token = request.headers[:HTTP_ACCESS_TOKEN]
-    unless User.login?(access_token) ? :ok : :unauthorized
+    unless User.login?(access_token)
       head(:unauthorized)
     end
 
