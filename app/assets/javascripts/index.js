@@ -4,6 +4,10 @@ import ReactDOM from 'react-dom';
 import { render } from 'react-dom'
 import Feelings from './components/feelings';
 import auth from './components/auth';
+
+import storage from './components/local_storage';
+import { app_config}  from './components/app_config';
+import { endpoint } from './components/endpoint';
 import { IndexRoute, Router, Route,  Link, withRouter} from 'react-router';
 import BrowserHistory from 'react-router/lib/BrowserHistory';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -14,35 +18,32 @@ injectTapEventPlugin();
 const Index = withRouter(class Index extends React.Component {
   constructor(props) {
     super(props)
+      this.state = {}
   }
   componentWillMount() {
-    //console.log(Object.keys(this.props.router));
     //console.log(this.props.router.params)
     // ログイン済かを確認する
-      if (!window.localStorage) {
+      if (storage.valid()) {
         console.log("localstrate not supported require login");
         this.props.router.replace('/top')
       } else {
-        console.log("session from local strage=" + window.localStorage.getItem('thinklog/session'))
-        $.ajax({
-          url: '/api/sessions/',
-          type: 'GET',
-          dataType: 'json',
-          beforeSend: function(request) {
-            // localstrageに設定されたトークンを設定して
-            request.setRequestHeader('ACCESS_TOKEN', window.localStorage.getItem('thinklog/session'));
-          },
-        }).done((data) => {
+        auth.connect(storage.get(app_config.session_key),
+        (data) => {
           console.log('redirect to my page');
           this.props.router.replace('/feelings')
-        }).fail((data) => {
-          console.log("しぱい");
-          console.log(data) ;
-          window.localStorage.removeItem('thinklog/session');
+        },
+        (data) => {
+          storage.remove('thinklog/session');
           this.props.router.replace('/top')
         });
       }
     //this.props.router.replace('/feelings')
+  }
+  componentDidMount(){
+    if (storage.valid()) {
+      console.log('unko')
+        this.setState({session: storage.get(app_config.session_key)})
+    }
   }
   render () {
     return (
@@ -59,7 +60,7 @@ class FeelingApp extends React.Component {
   }
   render () {
     return (
-        <Feelings url={"/api/feelings"}/>
+        <Feelings url={endpoint.feelings_path}/>
     )
   }
 }
@@ -69,21 +70,13 @@ const Top = withRouter(class Top extends React.Component {
   }
   handleSubmit(event){
     //ログイン＆ポータル画面へ
-    event.preventDefault()
-      alert('フォーム送るデー')
-    $.ajax({
-      url: '/api/sessions/',
-      type: 'POST',
-      dataType: 'json',
-      data: {user: {email: this.state.email, password: this.state.password }},
-    }).done((data) => {
-      console.log('redirect to my page');
-      console.log(data.access_token)
-      window.localStorage.setItem('thinklog/session', data.access_token);
-      console.log("session from login=" + window.localStorage.getItem('thinklog/session'))
+    event.preventDefault();
+    auth.login(this.state.email, this.state.password,
+    (data) => {
+      storage.set(app_config.session_key, data.access_token);
       this.props.router.replace('/feelings')
-    }).fail((data) => {
-      console.log(data) ;
+    },
+    (data) => {
       alert('ログインに失敗しました')
       this.props.router.replace('/top')
     });
@@ -100,9 +93,9 @@ const Top = withRouter(class Top extends React.Component {
         </ul>
         <div className="main">
           <h1>ログイン</h1>
-          <form onSubmit={this.handleSubmit}>
-            <input type='text' name="email" placeholder="メールアドレス" onChange={this.handleChange}/>
-            <input type='password' name="password" placeholder="password" onChange={this.handleChange}/>
+          <form onSubmit={this.handleSubmit.bind(this)}>
+            <input type='text' name="email" placeholder="メールアドレス" onChange={this.handleChange.bind(this)}/>
+            <input type='password' name="password" placeholder="password" onChange={this.handleChange.bind(this)}/>
             <div style={{textAlign:"center"}}>
               <button type="submit">ログイン</button>
             </div>
@@ -126,7 +119,7 @@ class Header extends React.Component {
         <div style={{position:"relative", textAlign:"right", paddingTop: "30px"}}>
           <Link to="/portal" style={{paddingRight: "5px"}}>ポータル</Link>
           <Link to="/userbox" style={{paddingRight: "5px"}}>ユーザーリスト</Link>
-          <button onClick={this.handleClick}>ログアウト</button>
+          <button onClick={this.handleClick.bind(this)}>ログアウト</button>
         </div>
         <hr/>
       </header>

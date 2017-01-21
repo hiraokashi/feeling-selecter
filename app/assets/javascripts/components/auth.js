@@ -1,38 +1,22 @@
+import { endpoint} from './endpoint';
 export default {
-  loggedIn(nextState, replace, next) {
-    // サーバにログイン情報を問い合わせる
-    alert(Object.keys(nextState.location))
+  connect(token, done, fail) {
+    // サーバにログイン済みか問い合わせる
+    $.ajax({
+      url: endpoint.sessions_path,
+      type: 'GET',
+      dataType: 'json',
+      beforeSend: function(request) {
+        request.setRequestHeader('ACCESS_TOKEN', token);
+      },
+    }).done(done).fail(fail);
   },
-  // OnEnter Hook Function with Router
-  executeCredentials(nextState, replace, next) {
-    const query = nextState.location.query
-      if (query.email && query.password) {
-        serverAuth(query.qsparam, query.password)
-          .then(
-              () => next(),
-              () => {
-                replace('/error')
-                  next()
-              }
-              )
-      } else {
-        replace('/error')
-          next()
-      }
+  login(email, password, done, fail) {
+    $.ajax({
+      url: endpoint.sessions_path,
+      type: 'POST',
+      dataType: 'json',
+      data: {user: {email: email, password: password }},
+    }).done(done).fail(fail);
   }
-
 };
-
-function serverAuth(email, password) {
-  return new Promise((resolve, reject) => {
-    // That server is gonna take a while
-    setTimeout(() => {
-      // ここをAPI認証に書き換える
-      if(email === 'hiraokashi@gmail.com' && password === 'unkounko') {
-        resolve('authenticated')
-      } else {
-        reject('nope')
-      }
-    }, 200)
-  })
-}
