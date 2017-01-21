@@ -1,3 +1,4 @@
+/* React Component */
 import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
