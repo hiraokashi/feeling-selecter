@@ -6,7 +6,7 @@ import { IndexRoute, Router, Route,  Link, withRouter} from 'react-router';
 import BrowserHistory from 'react-router/lib/BrowserHistory';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import auth from './auth';
+import session from './session';
 import storage from './local_storage';
 import { app_config}  from './app_config';
 import { endpoint } from './endpoint';
@@ -40,7 +40,7 @@ const Login = withRouter(class Login extends React.Component {
   handleSubmit(event){
     //ログイン＆ポータル画面へ
     event.preventDefault();
-    auth.login(this.state.email, this.state.password,
+    session.create(this.state.email, this.state.password,
     // success callback
     (data) => {
       storage.set(app_config.session_key, data.access_token);
@@ -52,7 +52,6 @@ const Login = withRouter(class Login extends React.Component {
       this.props.router.replace('/login');
     });
   }
-
   handleChange(event) {
     this.setState({ [`${event.target.name}`]: event.target.value });
   }

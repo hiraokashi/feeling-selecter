@@ -22,6 +22,6 @@ export default {
     }
   },
   valid() {
-    !!window.localStorage
+    return window.localStorage;
   }
 };

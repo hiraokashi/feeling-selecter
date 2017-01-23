@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { render } from 'react-dom'
-import auth from './components/auth';
+import session from './components/session';
 
 import storage from './components/local_storage';
 import { app_config}  from './components/app_config';
@@ -12,7 +12,7 @@ import BrowserHistory from 'react-router/lib/BrowserHistory';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 // Components
-import Root from './components/root';
+import Root from './components/Root';
 import Mypage from './components/mypage';
 import Login from './components/login';
 
