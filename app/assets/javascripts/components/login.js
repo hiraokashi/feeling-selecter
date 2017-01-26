@@ -44,7 +44,7 @@ const Login = withRouter(class Login extends React.Component {
     // success callback
     (data) => {
       storage.set(app_config.session_key, data.access_token);
-      this.props.router.replace('/mypage');
+      this.props.router.replace('/');
     },
     // fail callback
     (data) => {

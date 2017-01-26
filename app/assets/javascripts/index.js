@@ -12,7 +12,8 @@ import BrowserHistory from 'react-router/lib/BrowserHistory';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 // Components
-import Root from './components/Root';
+import GuestOnly from './components/guest_only';
+import UserOnly from './components/user_only';
 import Mypage from './components/mypage';
 import Login from './components/login';
 
@@ -21,12 +22,28 @@ import Login from './components/login';
 window.React = React;
 injectTapEventPlugin();
 
+
+
+class Index extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      <div>{this.props.children}</div>
+    );
+  }
+}
+
 // Routing Definition
 const routes = (
-    <Route path="/" component={Root}>
-      <IndexRoute component={Login} />
-      <Route path="/login" component={Login} />
-      <Route path="/mypage" component={Mypage}/>
+    <Route  component={Index}>
+      <Route component={UserOnly}>
+        <Route path="/" component={Mypage}/>
+      </Route>
+      <Route  component={GuestOnly}>
+         <Route path="/login" component={Login} />
+      </Route>
     </Route>
 );
 render((

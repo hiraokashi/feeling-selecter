@@ -11,7 +11,7 @@ import storage from './local_storage';
 import { app_config}  from './app_config';
 import { endpoint } from './endpoint';
 
-const Root = withRouter(class Root extends React.Component {
+const GuestOnly = withRouter(class GuestOnly extends React.Component {
   constructor(props) {
     super(props)
       this.state = {}
@@ -21,7 +21,6 @@ const Root = withRouter(class Root extends React.Component {
     // ログイン済かを確認する
       if (!storage.valid()) {
         console.log("localstrate not supported require login");
-        this.props.router.replace('/login')
       } else {
         session.connect(storage.get(app_config.session_key),
         (data) => {
@@ -30,7 +29,6 @@ const Root = withRouter(class Root extends React.Component {
         },
         (data) => {
           storage.remove('thinklog/session');
-          this.props.router.replace('/login')
         });
       }
     //this.props.router.replace('/feelings')
@@ -50,4 +48,4 @@ const Root = withRouter(class Root extends React.Component {
 }
 )
 
-export default Root
+export default GuestOnly
