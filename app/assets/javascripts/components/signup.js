@@ -50,6 +50,9 @@ const Signup = withRouter(class Signup extends React.Component {
       dataType: 'json',
       data: {user: {email: this.state.email, password: this.state.password , password_confirmation: this.state.password_confirmation}}
     }).done((data) => {
+      //Object.keys(data).forEach(function (key) {
+      //  console.log(key + " => "+ data[key])
+      //});
       storage.set(app_config.session_key, data.access_token);
       this.props.router.replace('/');
     }).fail((data) => {
