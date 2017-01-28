@@ -5,7 +5,6 @@ class Api::SessionsController < ApplicationController
     if @user = login(login_user[:email], login_user[:password])
       api_key = @user.activate
       @access_token = api_key.access_token
-      logger.info('login success !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     else
       respond_to do |format|
         format.json { render nothing: true, status: :not_found }

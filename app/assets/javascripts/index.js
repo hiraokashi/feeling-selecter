@@ -16,6 +16,7 @@ import GuestOnly from './components/guest_only';
 import UserOnly from './components/user_only';
 import Mypage from './components/mypage';
 import Login from './components/login';
+import Signup from './components/signup';
 
 
 // Needed for React Developer Tools
@@ -42,6 +43,7 @@ const routes = (
         <Route path="/" component={Mypage}/>
       </Route>
       <Route  component={GuestOnly}>
+         <Route path="/signup" component={Signup} />
          <Route path="/login" component={Login} />
       </Route>
     </Route>

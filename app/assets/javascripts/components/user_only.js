@@ -21,7 +21,7 @@ const UserOnly = withRouter(class UserOnly extends React.Component {
     // ログイン済かを確認する
       if (!storage.valid()) {
         console.log("localstrate not supported require login");
-        this.props.router.replace('/login')
+        this.props.router.replace('/signup')
       } else {
         session.connect(storage.get(app_config.session_key),
         (data) => {
@@ -29,7 +29,7 @@ const UserOnly = withRouter(class UserOnly extends React.Component {
         },
         (data) => {
           storage.remove('thinklog/session');
-          this.props.router.replace('/login')
+          this.props.router.replace('/signup')
         });
       }
     //this.props.router.replace('/feelings')

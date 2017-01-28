@@ -12,14 +12,15 @@ const style = {
 };
 class Feeling extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
   }
   handleClick(){
     this.props.onButtonClick(this.props.name)
   }
   render () {
     return (
-        <RaisedButton onClick={this.handleClick.bind(this)} key={this.props.id} style={style} secondary={true} label={this.props.name} />
+        <RaisedButton onClick={this.handleClick} key={this.props.id} style={style} secondary={true} label={this.props.name} />
     )
   }
 }
@@ -30,8 +31,9 @@ export default class Feelings extends React.Component {
     this.state = {
       feelings: []
     };
+    this.handleFeelingSubmit = this.handleFeelingSubmit.bind(this)
   }
-  componentDidMount(){
+  componentWillMount(){
     rw.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -50,7 +52,7 @@ export default class Feelings extends React.Component {
     return (
       <div className='messages'>
         {this.state.feelings.map((feeling, i) => {
-           return <Feeling key={i} id={feeling.id} name={feeling.name} onButtonClick={this.handleFeelingSubmit.bind(this)}/>
+           return <Feeling key={i} id={feeling.id} name={feeling.name} onButtonClick={this.handleFeelingSubmit}/>
         })}
       </div>
     )

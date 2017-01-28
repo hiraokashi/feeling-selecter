@@ -59,7 +59,7 @@ const Login = withRouter(class Login extends React.Component {
     return (
       <div>
         <ul>
-          <li><Link to="feelings">Feelings</Link></li>
+          <li><Link to="/signup">アカウント登録</Link></li>
         </ul>
         < LoginForm onSubmit={this.handleSubmit.bind(this)}  onChange={this.handleChange.bind(this)} email={this.state.email} password={this.state.password}/>
       </div>
