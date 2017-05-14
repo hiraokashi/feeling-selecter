@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     resource :sessions, only: [:create, :destroy, :show]
     resources :feelings
     resource :user_account do
+      resources :my_feelings do
+      end
     end
   end
 
