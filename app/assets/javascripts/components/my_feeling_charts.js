@@ -10,7 +10,7 @@ export class MyFeelingBarChart extends React.Component {
       let count = this.props.my_feelings.filter((my_feeling) => {
         return my_feeling.feeling_id == feeling.id
       }).length
-      console.log(JSON.stringify({ x: feeling.name, y: count }))
+      //console.log(JSON.stringify({ x: feeling.name, y: count }))
 
       return { x: feeling.name, y: count }
     })
