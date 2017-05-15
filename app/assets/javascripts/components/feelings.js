@@ -52,6 +52,23 @@ export default class Feelings extends React.Component {
     };
     this.handleFeelingSubmit = this.handleFeelingSubmit.bind(this)
   }
+
+  load_my_feelings(){
+    rw.ajax({
+      url: endpoint.my_feelings_path,
+      dataType: 'json',
+      type: 'GET',
+      session: this.props.session
+    }).done((data) => {
+      this.setState({my_feelings: data.my_feelings});
+      if (data.message) {
+        alert(data.message)
+      }
+    }).fail((data) => {
+      console.error(this.props.url, status, err.toString());
+    });
+  }
+
   componentWillMount(){
     rw.ajax({
       url: this.props.url,
@@ -60,25 +77,12 @@ export default class Feelings extends React.Component {
       session: this.props.session
     }).done((data) => {
       this.setState({feelings: data});
-      rw.ajax({
-        url: endpoint.my_feelings_path,
-        dataType: 'json',
-        type: 'GET',
-        session: this.props.session
-      }).done((data) => {
-        this.setState({my_feelings: data.my_feelings});
-        if (data.message) {
-          alert(data.message)
-        }
-      }).fail((data) => {
-        console.error(this.props.url, status, err.toString());
-      });
+      this.load_my_feelings()
     }).fail((data) => {
       console.error(this.props.url, status, err.toString());
     });
   }
   handleFeelingSubmit(feeling_id){
-    alert(feeling_id);
     rw.ajax({
       url: endpoint.my_feelings_path,
       type: 'POST',

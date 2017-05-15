@@ -28,11 +28,17 @@ export default class Mypage extends React.Component {
   render () {
     return (
         <MuiThemeProvider muiTheme={getMuiTheme()}>
-
-      <div className='messages'>
-        <Logout session={this.state.session} />
-        <Feelings session={this.state.session} url={endpoint.feelings_path}/>
-      </div>
+          {(() => {
+            if (this.state.session)
+              return (
+                <div className='messages'>
+                  <Logout session={this.state.session} />
+                  <Feelings session={this.state.session} url={endpoint.feelings_path}/>
+                </div>
+              )
+            else
+              return null
+          })()}
         </MuiThemeProvider>
     )
   }
