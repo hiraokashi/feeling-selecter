@@ -7,52 +7,19 @@ import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import rw from './request_wrapper';
 import { endpoint } from './endpoint';
+import FeelingButtons from './feeling_buttons'
+import MyFeelingLogs from './my_feeling_logs'
 
-const style = {
-  margin: 12,
-};
-class Feeling extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-  handleClick(){
-    this.props.onButtonClick(this.props.id)
-  }
-  render () {
-    return (
-        <RaisedButton onClick={this.handleClick} key={this.props.id} style={style} secondary={true} label={this.props.name} />
-    )
-  }
-}
-
-class MyFeeling extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render () {
-    return (
-      <div>
-      <span>{this.props.name}</span>
-      &nbsp;
-      &nbsp;
-      &nbsp;
-      <span>{this.props.create_time}</span>
-      <hr />
-      </div>
-    )
-  }
-}
-export default class Feelings extends React.Component {
+export default class FeelingApp extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       feelings: [],
-      my_feelings: []
+      my_feelings: [],
+      view_type: 'log'
     };
     this.handleFeelingSubmit = this.handleFeelingSubmit.bind(this)
   }
-
   load_my_feelings(){
     rw.ajax({
       url: endpoint.my_feelings_path,
@@ -68,7 +35,6 @@ export default class Feelings extends React.Component {
       console.error(this.props.url, status, err.toString());
     });
   }
-
   componentWillMount(){
     rw.ajax({
       url: this.props.url,
@@ -101,16 +67,15 @@ export default class Feelings extends React.Component {
   render () {
     return (
       <div className='all'>
-      <div className='messages'>
-      {this.state.feelings.map((feeling, i) => {
-        return <Feeling key={i} id={feeling.id} name={feeling.name} onButtonClick={this.handleFeelingSubmit}/>
-      })}
-      </div>
-      <div className='logs'>
-      {this.state.my_feelings.map((my_feeling, i) => {
-        return <MyFeeling key={i} id={my_feeling.id} name={my_feeling.name} create_time={my_feeling.create_time}/>
-      })}
-      </div>
+        <FeelingButtons feelings={this.state.feelings} handleFeelingSubmit={this.handleFeelingSubmit}/>
+          {(() => {
+            if (this.state.view_type == 'log')
+              return (
+                <MyFeelingLogs my_feelings={this.state.my_feelings} />
+              )
+            else
+              return null
+          })()}
       </div>
     )
   }

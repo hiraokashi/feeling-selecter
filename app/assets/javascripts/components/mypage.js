@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { render } from 'react-dom'
-import Feelings from './feelings';
+import FeelingApp from './feeling_app';
 import Logout from './logout';
 import { endpoint } from './endpoint';
 
@@ -33,7 +33,7 @@ export default class Mypage extends React.Component {
               return (
                 <div className='messages'>
                   <Logout session={this.state.session} />
-                  <Feelings session={this.state.session} url={endpoint.feelings_path}/>
+                  <FeelingApp session={this.state.session} url={endpoint.feelings_path}/>
                 </div>
               )
             else
