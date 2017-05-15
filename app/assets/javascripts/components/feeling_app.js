@@ -10,6 +10,7 @@ import { endpoint } from './endpoint';
 import FeelingButtons from './feeling_buttons'
 import MyFeelingLogs from './my_feeling_logs'
 import ViewSwitches from './view_switches'
+import {MyFeelingBarChart} from './my_feeling_charts'
 
 export default class FeelingApp extends React.Component {
   constructor(props) {
@@ -62,9 +63,9 @@ export default class FeelingApp extends React.Component {
       data: { my_feeling: {feeling_id: feeling_id} }
     }).done((data) => {
       this.setState({my_feelings: data.my_feelings})
-      if (data.message) {
-        alert(data.message)
-      }
+      //if (data.message) {
+      //  alert(data.message)
+      //}
     }).fail((data) => {
       this.setState({error_message: data.responseText})
     });
@@ -87,7 +88,7 @@ export default class FeelingApp extends React.Component {
             )
           else if (this.state.view_type == 'chart')
             return (
-              <p>バーカ</p>
+              <MyFeelingBarChart label={"unko"} feelings={this.state.feelings}  my_feelings={this.state.my_feelings} />
             )
           else
             return null
