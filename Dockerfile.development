@@ -3,6 +3,7 @@ FROM ruby:2.3.1
 #RUN rm /bin/sh && ln -sf /bin/bash /bin/sh
 
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev
+RUN apt-get install cmake libicu-dev -y
 ENV NVM_DIR /usr/local/nvm
 ENV NODE_VERSION 7.2.0
 
@@ -24,10 +25,15 @@ ENV PATH      $APP_HOME/node_modules:$PATH
 ENV PATH      $APP_HOME/node_modules/.bin:$PATH
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
+ADD . $app
 
 ADD Gemfile $APP_HOME/
 ADD Gemfile.lock $APP_HOME/
-RUN bundle install -j4
+
+# --- Add this to your Dockerfile ---
+ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
+  BUNDLE_JOBS=2 \
+  BUNDLE_PATH=/bundle
+
 ADD package.json $APP_HOME/
-RUN npm install
-ADD . $APP_HOME
+RUN npm config set prefix /node_modules
