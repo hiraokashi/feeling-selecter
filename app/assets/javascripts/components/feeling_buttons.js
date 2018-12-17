@@ -1,3 +1,4 @@
+
 /* React Component */
 import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -6,17 +7,18 @@ import {pinkA100} from 'material-ui/styles/colors';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import rw from './request_wrapper';
+import { endpoint } from './endpoint';
 
 const style = {
   margin: 12,
 };
-class Feeling extends React.Component {
+class FeelingButton extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick(){
-    this.props.onButtonClick(this.props.name)
+    this.props.onButtonClick(this.props.id)
   }
   render () {
     return (
@@ -25,35 +27,16 @@ class Feeling extends React.Component {
   }
 }
 
-export default class Feelings extends React.Component {
+export default class FeelingButtons extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = {
-      feelings: []
-    };
-    this.handleFeelingSubmit = this.handleFeelingSubmit.bind(this)
-  }
-  componentWillMount(){
-    rw.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      type: 'GET',
-      session: this.props.session
-    }).done((data) => {
-      this.setState({feelings: data});
-    }).fail((data) => {
-      console.error(this.props.url, status, err.toString());
-    });
-  }
-  handleFeelingSubmit(feeling_id){
-    alert(feeling_id);
+    super(props);
   }
   render () {
     return (
       <div className='messages'>
-        {this.state.feelings.map((feeling, i) => {
-           return <Feeling key={i} id={feeling.id} name={feeling.name} onButtonClick={this.handleFeelingSubmit}/>
-        })}
+      {this.props.feelings.map((feeling, i) => {
+        return <FeelingButton key={i} id={feeling.id} name={feeling.name} onButtonClick={this.props.handleFeelingSubmit}/>
+      })}
       </div>
     )
   }
